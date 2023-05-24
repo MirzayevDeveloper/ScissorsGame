@@ -28,10 +28,12 @@ namespace ScissorsGame
 		static void PrintMenu(string[] moves)
 		{
 			Console.WriteLine("Available Moves:");
+
 			for (int i = 0; i < moves.Length; i++)
 			{
 				Console.WriteLine($"{i + 1} - {moves[i]}");
 			}
+
 			Console.WriteLine("0 - Exit");
 			Console.WriteLine("? - Help");
 		}
@@ -42,8 +44,9 @@ namespace ScissorsGame
 
 			var table = new MoveTable(args);
 			var gameJudge = new GameJudge(args.Length);
+			bool isActive = true;
 
-			while (true)
+			while (isActive)
 			{
 				string key = Security.GenerateKey();
 				int computerMove = RandomNumberGenerator.GetInt32(args.Length);
@@ -62,7 +65,7 @@ namespace ScissorsGame
 					Console.Write("\n\n\n");
 					continue;
 				}
-				else if (input == "0") break;
+				else if (input == "0") isActive = false;
 
 				if (!int.TryParse(input, out var playerMove) || playerMove <= 0 || playerMove > args.Length)
 				{
