@@ -2,11 +2,13 @@
 using ScissorsGame.Enums;
 using ScissorsGame.Models;
 
+//Rock Paper Scissors Game
+
 namespace ScissorsGame
 {
 	internal class Program
 	{
-		private static readonly SecurityService Security = new SecurityService();
+		private static SecurityService _security;
 
 		static bool ValidateArgs(string[] args)
 		{
@@ -42,15 +44,17 @@ namespace ScissorsGame
 		{
 			if (!ValidateArgs(args)) return;
 
+			 _security = new SecurityService();
+
 			var table = new MoveTable(args);
 			var gameJudge = new GameJudge(args.Length);
 			bool isActive = true;
 
 			while (isActive)
 			{
-				string key = Security.GenerateKey();
+				string key = _security.GenerateKey();
 				int computerMove = RandomNumberGenerator.GetInt32(args.Length);
-				string hmac = Security.GenerateHMAC(key, args[computerMove]);
+				string hmac = _security.GenerateHMAC(key, args[computerMove]);
 
 				Console.WriteLine("HMAC: " + hmac);
 
